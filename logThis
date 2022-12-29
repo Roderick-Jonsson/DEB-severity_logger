@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# usage:
+# logThis min-sec max-sec
+
+while true
+  do
+  if [[ -v $1 && -v $2 ]]
+  then
+    waitingsec=$(($1 + $RANDOM % $2))
+  else
+    waitingsec=$((1 + $RANDOM % 10))
+  fi
+  echo "waiting for $waitingsec seconds"
+  if [[ $waitingsec%2 -eq 0 ]]
+  then
+    echo "printing error"
+    echo "test log2" >> /proc/1/fd/2
+  else
+    echo "printing info"
+    echo "test log1" >> /proc/1/fd/1
+  fi
+  sleep $[$waitingsec]s
+done
